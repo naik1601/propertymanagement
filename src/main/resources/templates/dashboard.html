@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:sec="https://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body>
+<div class="login-container">
+    <h1 th:text="'Welcome, ' + ${user.firstName}"></h1>
+    <h3 th:text="'Your Role, ' + ${user.role}"></h3>
+
+    <ul class="no-bullets">
+        <li th:if="${#authorization.expression('hasRole(''AGENT'')')}">
+            <h2>Agent Dashboard</h2>
+            <a >My Profile</a>
+            <a >Manage Listings</a>
+            <a >Add New Property</a>
+            <a >View Messages</a>
+        </li>
+
+        <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <h2>Admin Dashboard</h2>
+            <a>My Profile</a>
+            <a>Manage Users</a>
+            <a>Create Agent</a>
+        </li>
+        <li th:if="${#authorization.expression('hasRole(''BUYER'')')}">
+            <h2>Buyer Dashboard</h2>
+            <a>My Profile</a>
+            <a>Browse Properties</a>
+            <a>Saved Favorites</a>
+            <a >View Messages</a>
+        </li>
+
+        <li><a class="section-spacing" th:href="@{/logout}">Log Out</a></li>
+    </ul>
+</div>
+</body>
+</html>
