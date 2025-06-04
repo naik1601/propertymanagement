@@ -47,55 +47,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void prepareSettingsModel(Model model) {
+    public void prepareeditprofile(Model model) {
         CurrentUserContext context = getCurrentUserContext();
         User user = context.user();
         Authentication auth = context.auth();
-
         model.addAttribute("user", user);
-
-        boolean isManager = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_MANAGER"));
-
-//        if (isManager) {
-//            List<User> currentEmployees = userRepository.findByManager(user);
-//            List<User> availableUsers = userRepository.findByManagerIsNull().stream()
-//                    .filter(u -> !u.getEmail().equals(user.getEmail()))
-//                    .collect(Collectors.toList());
-//
-//            model.addAttribute("currentEmployees", currentEmployees);
-//            model.addAttribute("availableUsers", availableUsers);
-//        }
     }
 
     @Override
     public void updateUserSettings(User updatedUser, String password, List<Long> addIds, List<Long> removeIds) {
         User user = getCurrentUserContext().user();
-
         user.setFirstName(updatedUser.getFirstName());
         user.setLastName(updatedUser.getLastName());
         user.setEmail(updatedUser.getEmail());
-
-        if (password != null && !password.isBlank()) {
-            user.setPassword(passwordEncoder.encode(password));
-        }
-
-//        if (addIds != null) {
-//            for (Long empId : addIds) {
-//                Users emp = userRepository.findById(empId).orElseThrow();
-//                emp.setManager(user);
-//                userRepository.save(emp);
-//            }
-//        }
-
-//        if (removeIds != null) {
-//            for (Long empId : removeIds) {
-//                Users emp = userRepository.findById(empId).orElseThrow();
-//                emp.setManager(null);
-//                userRepository.save(emp);
-//            }
-//        }
-
         userRepository.save(user);
     }
 

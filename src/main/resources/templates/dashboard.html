@@ -11,26 +11,30 @@
 
     <ul class="no-bullets">
         <li th:if="${#authorization.expression('hasRole(''AGENT'')')}">
-            <h2>Agent Dashboard</h2>
-            <a >My Profile</a>
-            <a >Manage Listings</a>
-            <a >Add New Property</a>
-            <a >View Messages</a>
+        <li><h2>Agent Dashboard</h2></li>
+            <li><a th:href="@{/profile}">My Profile</a></li>
+            <li><a >Manage Listings</a></li>
+            <li><a >Add New Property</a></li>
+            <li><a >View Messages</a></li>
         </li>
-
+    </ul>
+    <ul>
         <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-            <h2>Admin Dashboard</h2>
-            <a>My Profile</a>
-            <a>Manage Users</a>
-            <a>Create Agent</a>
+            <li><h2>Admin Dashboard</h2></li>
+            <li><a th:href="@{/profile}">My Profile</a></li>
+            <li><a>Manage Users</a></li>
+            <li><a>Create Agent</a></li>
         </li>
+    </ul>
+    <ul>
         <li th:if="${#authorization.expression('hasRole(''BUYER'')')}">
-            <h2>Buyer Dashboard</h2>
-            <a>My Profile</a>
-            <a>Browse Properties</a>
-            <a>Saved Favorites</a>
-            <a >View Messages</a>
+          <li>  <h2>Buyer Dashboard</h2> </li>
+           <li> <a th:href="@{/profile}">My Profile</a><li>
+            <li><a>Browse Properties</a></li>
+            <li><a>Saved Favorites</a></li>
+            <li><a >View Messages</a></li>
         </li>
+    </ul>
 
         <li><a class="section-spacing" th:href="@{/logout}">Log Out</a></li>
     </ul>

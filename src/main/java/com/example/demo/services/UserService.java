@@ -15,7 +15,7 @@ public interface UserService {
     void prepareProfileModel(Model model);
 
     @PreAuthorize("isAuthenticated()")
-    void prepareSettingsModel(Model model);
+    void prepareeditprofile(Model model);
 
     @PreAuthorize("isAuthenticated()")
     void updateUserSettings(User updatedUser, String password, List<Long> addIds, List<Long> removeIds);

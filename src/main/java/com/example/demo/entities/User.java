@@ -31,9 +31,6 @@ public class User {
     @Column(nullable = false)
     private String username;
 
-
-
-
     // Relationships
 //    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL)
 //    private List<Property> properties;
@@ -93,6 +90,7 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
     //
 //    public List<Property> getProperties() { return properties; }
 //    public void setProperties(List<Property> properties) { this.properties = properties; }

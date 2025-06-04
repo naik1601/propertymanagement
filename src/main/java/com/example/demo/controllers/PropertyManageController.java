@@ -87,5 +87,18 @@ public class PropertyManageController {
             return "redirect:/register";
         }
     }
+    @GetMapping("/profile")
+    @PreAuthorize("hasAnyRole('BUYER','AGENT','ADMIN')")
+    public String showProfile(Model model) {
+        userService.prepareProfileModel(model);
+        return "profile";
+    }
+
+    @GetMapping("/edit")
+    @PreAuthorize("hasAnyRole('BUYER','AGENT','ADMIN')")
+    public String showSettings(Model model) {
+        userService.prepareeditprofile(model);
+        return "editprofile";
+    }
 
 }

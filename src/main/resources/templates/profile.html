@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+</head>
+<body>
+<div class="login-container">
+
+    <table class="profile-table">
+        <tr>
+            <td><strong>First Name:</strong></td>
+            <td th:text="${user.firstName}">Mason</td>
+        </tr>
+        <tr>
+            <td><strong>Last Name:</strong></td>
+            <td th:text="${user.lastName}">Lee</td>
+        </tr>
+        <tr>
+            <td><strong>Email:</strong></td>
+            <td th:text="${user.email}">mason.lee@email.com</td>
+        </tr>
+        <tr>
+            <td><strong>Roles:</strong></td>
+            <td th:text="${user.role}">
+                     ROLE_USER
+
+            </td>
+        </tr>
+    </table>
+    <a th:href="@{/editprofile}">Editprofile</a>
+    <a th:href="@{/dashboard}">Backtodashboard</a>
+</div>
+</body>
+</html>
