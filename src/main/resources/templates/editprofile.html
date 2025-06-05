@@ -2,17 +2,22 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Account Settings</title>
+  <title>Edit Profile</title>
   <link rel="stylesheet" th:href="@{/css/login.css}"/>
+  <link rel="stylesheet" th:href="@{/css/landing.css}">
 </head>
 <body>
-<div class="login-container">
-  <h1>Account Settings</h1>
+<div class="background-image">
+  <img th:src="@{/images/bg2.jpg}" alt="Modern Home" />
+</div>
+<div class="page-wrapper">
+<div class="container">
+  <h1>Edit Profile</h1>
   <!-- ✅ Success or error message block -->
   <div class="success" th:if="${successMessage}" th:text="${successMessage}"></div>
   <div class="failure" th:if="${errorMessage}" th:text="${errorMessage}"></div>
 
-  <form class="section-spacing" method="post" th:action="@{/editprofile}" enctype="multipart/form-data">
+  <form class="section-spacing" method="post" th:action="@{/edit}" enctype="multipart/form-data">
     <table class="inline-style-4">
       <tr>
         <td><label for="firstName">First Name:</label></td>
@@ -31,11 +36,12 @@
     <div class="centered-link">
       <button type="submit">Save Changes</button>
     </div>
-  </form>v
+  </form>
 
   <div class="centered-link">
-    <a th:href="@{/dashboard}">← Back to Dashboard</a>
+    <a th:href="@{/profile}">Cancel</a>
   </div>
+</div>
 </div>
 </body>
 </html>

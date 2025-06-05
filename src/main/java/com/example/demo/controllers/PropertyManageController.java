@@ -100,5 +100,21 @@ public class PropertyManageController {
         userService.prepareeditprofile(model);
         return "editprofile";
     }
+    @PostMapping("/edit")
+    @PreAuthorize("hasAnyRole('BUYER','AGENT','ADMIN')")
+    public String updateSettings(@ModelAttribute("user") User updatedUser,
+                                 RedirectAttributes redirectAttributes) {
+        try {
+            User actualUser = userService.getCurrentUser();
+            actualUser.setFirstName(updatedUser.getFirstName());
+            actualUser.setLastName(updatedUser.getLastName());
+            actualUser.setEmail(updatedUser.getEmail());
+            userService.updateUserSettings(actualUser);
+            redirectAttributes.addFlashAttribute("successMessage", "Account updated successfully.");
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to update account: " + ex.getMessage());
+        }
+        return "redirect:/profile";
+    }
 
 }

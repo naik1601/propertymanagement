@@ -16,7 +16,8 @@
 <div class="background-image">
     <img th:src="@{/images/bg2.jpg}" alt="Modern Home" />
 </div>
-<div class="login-container">
+<div class="page-wrapper">
+<div class="container">
     <div th:if="${successMessage}" class="success">
         <p th:text="${successMessage}"></p>
     </div>
@@ -32,20 +33,18 @@
         <input id="email" th:field="*{email}" type="text"/>
         <label for="password">Password</label>
         <input id="password" th:field="*{password}" type="password"/>
-        <!-- Show Password Checkbox -->
         <label class="profile-table">
             <input class="checkbox-margin" onclick="togglePasswordVisibility()" type="checkbox"/>
             Show Password
         </label>
-        <!-- Error Message -->
         <div class="error-message" th:if="${loginError}" th:text="${loginError}"></div>
         <button type="submit">Log In</button>
     </form>
-    <!-- Register Link -->
     <p class="section-spacing">
         Don't have an account?
         <a th:href="@{/register}">Register</a>
     </p>
+</div>
 </div>
 </body>
 </html>

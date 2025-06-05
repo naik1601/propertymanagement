@@ -1,43 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:sec="https://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>User Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/landing.css}">
 </head>
 <body>
-<div class="login-container">
+
+<div class="background-image">
+    <img th:src="@{/images/bg2.jpg}" alt="Modern Home" />
+</div>
+<div class="page-wrapper">
+<div class="container">
     <h1 th:text="'Welcome, ' + ${user.firstName}"></h1>
     <h3 th:text="'Your Role, ' + ${user.role}"></h3>
-
-    <ul class="no-bullets">
-        <li th:if="${#authorization.expression('hasRole(''AGENT'')')}">
-        <li><h2>Agent Dashboard</h2></li>
+    <div th:if="${#authorization.expression('hasRole(''AGENT'')')}">
+        <h2>Agent Dashboard</h2>
+        <ul class="no-bullets">
             <li><a th:href="@{/profile}">My Profile</a></li>
-            <li><a >Manage Listings</a></li>
-            <li><a >Add New Property</a></li>
-            <li><a >View Messages</a></li>
-        </li>
-    </ul>
-    <ul>
-        <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-            <li><h2>Admin Dashboard</h2></li>
+            <li><a href="#">Manage Listings</a></li>
+            <li><a href="#">Add New Property</a></li>
+            <li><a href="#">View Messages</a></li>
+        </ul>
+    </div>
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <h2>Admin Dashboard</h2>
+        <ul class="no-bullets">
             <li><a th:href="@{/profile}">My Profile</a></li>
-            <li><a>Manage Users</a></li>
-            <li><a>Create Agent</a></li>
-        </li>
-    </ul>
-    <ul>
-        <li th:if="${#authorization.expression('hasRole(''BUYER'')')}">
-          <li>  <h2>Buyer Dashboard</h2> </li>
-           <li> <a th:href="@{/profile}">My Profile</a><li>
-            <li><a>Browse Properties</a></li>
-            <li><a>Saved Favorites</a></li>
-            <li><a >View Messages</a></li>
-        </li>
-    </ul>
-
-        <li><a class="section-spacing" th:href="@{/logout}">Log Out</a></li>
-    </ul>
+            <li><a href="#">Manage Users</a></li>
+            <li><a href="#">Create Agent</a></li>
+        </ul>
+    </div>
+    <div th:if="${#authorization.expression('hasRole(''BUYER'')')}">
+        <h2>Buyer Dashboard</h2>
+        <ul class="no-bullets">
+            <li><a th:href="@{/profile}">My Profile</a></li>
+            <li><a href="#">Browse Properties</a></li>
+            <li><a href="#">Saved Favorites</a></li>
+            <li><a href="#">View Messages</a></li>
+        </ul>
+    </div>
+    <div class="section-spacing">
+        <a class="section-spacing" th:href="@{/logout}">Log Out</a>
+    </div>
+</div>
 </div>
 </body>
 </html>

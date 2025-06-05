@@ -18,7 +18,7 @@ public interface UserService {
     void prepareeditprofile(Model model);
 
     @PreAuthorize("isAuthenticated()")
-    void updateUserSettings(User updatedUser, String password, List<Long> addIds, List<Long> removeIds);
+    void updateUserSettings(User updatedUser);
 
     @PreAuthorize("hasRole('ADMIN')")
     List<User> getAllUsers();

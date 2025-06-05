@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserSettings(User updatedUser, String password, List<Long> addIds, List<Long> removeIds) {
+    public void updateUserSettings(User updatedUser) {
         User user = getCurrentUserContext().user();
         user.setFirstName(updatedUser.getFirstName());
         user.setLastName(updatedUser.getLastName());
@@ -95,4 +95,5 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
+
 }

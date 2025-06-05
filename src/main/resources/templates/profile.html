@@ -4,9 +4,14 @@
 <head>
     <title>User Profile</title>
     <link rel="stylesheet" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" th:href="@{/css/landing.css}">
 </head>
 <body>
-<div class="login-container">
+<div class="background-image">
+    <img th:src="@{/images/bg2.jpg}" alt="Modern Home" />
+</div>
+<div class="page-wrapper">
+<div class="container">
 
     <table class="profile-table">
         <tr>
@@ -29,8 +34,9 @@
             </td>
         </tr>
     </table>
-    <a th:href="@{/editprofile}">Editprofile</a>
+    <a th:href="@{/edit}">Editprofile</a>
     <a th:href="@{/dashboard}">Backtodashboard</a>
+</div>
 </div>
 </body>
 </html>
