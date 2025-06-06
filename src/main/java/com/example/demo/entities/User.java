@@ -4,6 +4,7 @@ package com.example.demo.entities;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
@@ -32,17 +33,17 @@ public class User {
     private String username;
 
     // Relationships
-//    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL)
-//    private List<Property> properties;
-//
+    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Property> properties;
+
 //    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
 //    private List<Message> sentMessages;
 //
 //    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
 //    private List<Message> receivedMessages;
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Favorite> favorites;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Favourite> favourites;
 
     // Constructors
     public User() {}
@@ -92,15 +93,15 @@ public class User {
     }
 
     //
-//    public List<Property> getProperties() { return properties; }
-//    public void setProperties(List<Property> properties) { this.properties = properties; }
-//
+    public List<Property> getProperties() { return properties; }
+    public void setProperties(List<Property> properties) { this.properties = properties; }
+
 //    public List<Message> getSentMessages() { return sentMessages; }
 //    public void setSentMessages(List<Message> sentMessages) { this.sentMessages = sentMessages; }
 //
 //    public List<Message> getReceivedMessages() { return receivedMessages; }
 //    public void setReceivedMessages(List<Message> receivedMessages) { this.receivedMessages = receivedMessages; }
-//
-//    public List<Favorite> getFavorites() { return favorites; }
-//    public void setFavorites(List<Favorite> favorites) { this.favorites = favorites; }
+
+    public List<Favourite> getFavorites() { return favourites; }
+    public void setFavorites(List<Favourite> favorites) { this.favourites = favourites; }
 }

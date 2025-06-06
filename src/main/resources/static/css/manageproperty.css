@@ -1,0 +1,22 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+img.property-img {
+    width: 100px;
+    height: auto;
+}
+
+.action-buttons button {
+    margin-right: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+}

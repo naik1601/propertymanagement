@@ -13,22 +13,23 @@ public class Favourite {
 
     // Many-to-one: user who favorited the property
     @ManyToOne
-    @JoinColumn(name = "buyer_id")
-    private User buyer;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     // Many-to-one: the property that was favorited
     @ManyToOne
     @JoinColumn(name = "property_id")
     private Property property;
 
+    @Column(name = "created_at", columnDefinition = "DATETIME")
     private LocalDateTime createdAt;
 
     // Constructors
     public Favourite() {}
 
-    public Favourite(Long id, User buyer, Property property, LocalDateTime createdAt) {
+    public Favourite(Long id, User user, Property property, LocalDateTime createdAt) {
         this.id = id;
-        this.buyer = buyer;
+        this.user = user;
         this.property = property;
         this.createdAt = createdAt;
     }
@@ -37,8 +38,8 @@ public class Favourite {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public User getBuyer() { return buyer; }
-    public void setBuyer(User buyer) { this.buyer = buyer; }
+    public User getBuyer() { return user; }
+    public void setBuyer(User buyer) { this.user = buyer; }
 
     public Property getProperty() { return property; }
     public void setProperty(Property property) { this.property = property; }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Property</title>
+  <link rel="stylesheet" th:href="@{/css/add_property.css}" />
+  <link rel="stylesheet" th:href="@{/css/login.css}" />
+  <link rel="stylesheet" th:href="@{/css/landing.css}">
+</head>
+<body>
+<div class="background-image">
+  <img th:src="@{/images/bg2.jpg}" alt="Modern Home" />
+</div>
+
+<div class="page-wrapper">
+  <div class="container">
+    <h2>Add New Property</h2>
+    <form method="post" th:action="@{/properties/add}" th:object="${properties}" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required>
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+        <label for="size">Size (sq ft):</label>
+        <input type="number" id="size" name="size" required>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+        <label for="propertyImages">Upload Property Images:</label>
+        <input type="file" id="propertyImages" name="file" accept="image/*" multiple>
+        <button type="submit" class="btn">Add Property</button>
+        <a href="/dashboard" class="btn back-btn">Back to Dashboard</a>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

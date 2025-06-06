@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.entities.Property;
 import com.example.demo.entities.User;
 import com.example.demo.services.AuthService;
 import com.example.demo.services.UserService;
@@ -9,10 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -116,5 +114,35 @@ public class PropertyManageController {
         }
         return "redirect:/profile";
     }
+    @GetMapping("/properties/manage")
+    @PreAuthorize("hasRole('AGENT')")
+    public String showAgentDashboard(Model model) {
+        List<Property> properties = userService.getpropertiesforagent();
+        model.addAttribute("properties", properties);
+        return "manageproperty";
+    }
+    @GetMapping("/properties/add")
+    @PreAuthorize("hasRole('AGENT')")
+    public String Addnewproperty(Model model) {
+        model.addAttribute("property", new Property());
+        return "addnewproperty";
+    }
+
+    @PostMapping("/properties/add")
+    @PreAuthorize("hasRole('AGENT')")
+    public String addProperty(@ModelAttribute Property property,
+                              @RequestParam("file") MultipartFile[] images) {
+        User agent = userService.getCurrentUser();
+        userService.addNewProperty(property, images, agent);
+        return "redirect:/properties/manage";
+    }
+    @GetMapping("/properties/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Property property = userService.findById(id);
+        model.addAttribute("property", property);
+        return "editproperty"; // the name of your Thymeleaf template
+    }
+
+
 
 }

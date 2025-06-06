@@ -23,6 +23,7 @@ public class Message {
     @JoinColumn(name = "property_id")
     private Property property;
 
+    @Column(name = "timestamp", columnDefinition = "DATETIME")
     private LocalDateTime timestamp;
 
     private String reply;

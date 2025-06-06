@@ -85,6 +85,10 @@ ul.no-bullets {
     margin: 0;
 }
 
+ul.no-bullets li a:hover{
+    font-size: 16px;
+}
+
 .error-message {
     color: red;
     font-size: 0.9em;
@@ -138,10 +142,17 @@ tr {
     height: auto;
 }
 
-.centered-link { text-align: center; margin-top: 20px; }
 .checkbox-margin { margin-right: 6px; }
 .profile-table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-.section-spacing { margin-top: 20px; }
+.section-spacing {
+    margin-top: 20px;
+ }
+
+ a {
+     color: red;
+     text-decoration: none;
+ }
+
 .background-image {
     position: fixed;
     top: 0;

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Property</title>
+    <link rel="stylesheet" th:href="@{/css/add_property.css}" />
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/landing.css}">
+</head>
+<body>
+<div class="background-image">
+    <img th:src="@{/images/bg2.jpg}" alt="Modern Home" />
+</div>
+
+<div class="page-wrapper">
+    <div class="container">
+        <h2>Add New Property</h2>
+        <form method="post" th:action="@{/properties/edit}" th:object="${properties}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Title:</label>
+                <input type="text" th:field="*{title}" /><br/>
+
+                <label>Price:</label>
+                <input type="number" th:field="*{price}" /><br/>
+
+                <label>Location:</label>
+                <input type="text" th:field="*{location}" /><br/>
+
+                <label>Size:</label>
+                <input type="number" th:field="*{size}" /><br/>
+
+                <label>Description:</label>
+                <textarea th:field="*{description}"></textarea><br/>
+
+                <button type="submit">Update Property</button>
+                <label for="propertyImages">Upload Property Images:</label>
+                <input type="file" id="propertyImages" name="file" accept="image/*" multiple>
+                <button type="submit" class="btn">Save Changes</button>
+                <a href="/dashboard" class="btn back-btn">Back to Dashboard</a>
+            </div>
+        </form>
+        <div th:each="img : ${property.images}">
+            <img th:src="@{'/images/PropertyImages/' + ${property.title} + '/' + ${img.imageFileName}}"
+                 style="width: 120px; height: auto;" alt="Property Image"/>
+            <form th:action="@{'/properties/delete-image/' + ${img.id}}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Delete this image?')">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

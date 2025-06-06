@@ -10,11 +10,16 @@ public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private Double price;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(nullable = false)
     private String location;
+    @Column(nullable = false)
     private Integer size;
 
     // Many-to-one: agent (User)
@@ -23,11 +28,11 @@ public class Property {
     private User agent;
 
     // One-to-many: property images
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<PropertyImage> images;
 
     // Many-to-many: favorited by users
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Favourite> favourites;
 
     // Constructors
