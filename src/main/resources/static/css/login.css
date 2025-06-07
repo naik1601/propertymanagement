@@ -8,6 +8,8 @@ body {
     justify-content: center; /* centers horizontally */
     align-items: flex-start; /* adjust vertical alignment as needed */
     min-height: 100vh; /* ensure full viewport height */
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 form label {

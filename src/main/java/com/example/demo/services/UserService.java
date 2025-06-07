@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.Property;
+import com.example.demo.entities.PropertyImage;
 import com.example.demo.entities.User;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
@@ -31,6 +32,9 @@ public interface UserService {
     @PreAuthorize("hasRole('AGENT')")
     Property addNewProperty(Property property, MultipartFile[] images, User agent);
 
+    @PreAuthorize("hasRole('AGENT')")
+    void updateProperty(Long ID,Property property, MultipartFile[] images);
+
 
 //    @PreAuthorize("hasRole('MANAGER')")
 //    List<User> getTeamForCurrentManager();
@@ -44,5 +48,11 @@ public interface UserService {
     User getCurrentUser();
 
     @PreAuthorize("hasRole('AGENT')")
-    Property findById(Long id);
+    Property getpropertybyid(Long id);
+
+    @PreAuthorize("hasRole('AGENT')")
+    void deletepropertyimgbyid(Long id);
+
+    @PreAuthorize("hasRole('AGENT')")
+    void deleteproperty(Long id);
 }

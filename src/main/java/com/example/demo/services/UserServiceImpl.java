@@ -14,12 +14,14 @@ import org.springframework.ui.Model;
 import com.example.demo.repositories.PropertyRepository;
 import com.example.demo.repositories.PropertyImageRepository;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import com.example.demo.utils.CurrentUserContext;
 import org.springframework.web.multipart.MultipartFile;
@@ -97,7 +99,7 @@ public class UserServiceImpl implements UserService {
         if (!agent.getRole().equals(UserRole.AGENT)) {
             throw new IllegalStateException("User is not an agent.");
         }
-        return agent.getProperties();
+        return propertyRepository.findByAgent(agent);
 
     }
 
@@ -127,16 +129,61 @@ public class UserServiceImpl implements UserService {
 
         return savedProperty;
     }
+
+    public void updateProperty(Long id, Property updated, MultipartFile[] newImages) {
+        Property property = propertyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Property not found"));
+
+        String oldTitle = property.getTitle();
+        String newTitle = updated.getTitle();
+
+        // Check and rename folder if title has changed
+        if (!oldTitle.equals(newTitle)) {
+            renamePropertyImageFolder(oldTitle, newTitle);
+        }
+
+        // Update basic property details
+        property.setTitle(newTitle);
+        property.setPrice(updated.getPrice());
+        property.setLocation(updated.getLocation());
+        property.setSize(updated.getSize());
+        property.setDescription(updated.getDescription());
+
+        // Add new images
+        if (newImages != null) {
+            for (MultipartFile file : newImages) {
+                if (!file.isEmpty()) {
+                    String filename = storeProfilePicture(file, newTitle);
+                    PropertyImage image = new PropertyImage();
+                    image.setImageFileName(filename);
+                    image.setProperty(property);
+                    property.getImages().add(image);
+                }
+            }
+        }
+
+        propertyRepository.save(property);
+    }
+
+
     @Override
-    public Property findById(Long id) {
+    public Property getpropertybyid(Long id) {
         return propertyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Property not found with ID: " + id));
     }
+@Override
+    public void deletepropertyimgbyid(Long id) {
+        PropertyImage image = propertyImageRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Image not found"));
 
-//    @Override
-//    public List<User> getTeamForCurrentManager() {
-//        return userRepository.findByManager(getCurrentUserContext().user());
-//    }
+        // delete physical file
+        String path = "src/main/resources/static/images/PropertyImages/" +
+                image.getProperty().getTitle() + "/" + image.getImageFileName();
+        new File(path).delete();
+
+    propertyImageRepository.delete(image);
+    }
+
 
     @Override
     public void updateUser(User savedUser) {
@@ -150,6 +197,62 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
+    public String storeProfilePicture(MultipartFile file, String propertyTitle){
+        try {
+            String uploadDir = "src/main/resources/static/images/PropertyImages/" + propertyTitle;
+            File directory = new File(uploadDir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir, filename);
+
+
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            return filename;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    private void renamePropertyImageFolder(String oldTitle, String newTitle) {
+        String baseDir = "src/main/resources/static/images/PropertyImages/";
+        File oldFolder = new File(baseDir + oldTitle);
+        File newFolder = new File(baseDir + newTitle);
+
+        if (oldFolder.exists() && !newFolder.exists()) {
+            boolean success = oldFolder.renameTo(newFolder);
+            if (!success) {
+                throw new RuntimeException("Failed to rename folder from " + oldTitle + " to " + newTitle);
+            }
+        }
+    }
+    @Override
+    public void deleteproperty(Long id) {
+        Property property = propertyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Property not found"));
+        if (property.getImages() != null) {
+            propertyImageRepository.deleteAll(property.getImages());
+        }
+        String folderPath = "src/main/resources/static/images/PropertyImages/" + property.getTitle();
+        File directory = new File(folderPath);
+        if (directory.exists()) {
+            for (File file : directory.listFiles()) {
+                file.delete();
+            }
+            directory.delete();
+        }
+        User agent = property.getAgent();
+        if (agent != null) {
+            agent.getProperties().remove(property);
+        }
+        propertyRepository.delete(property);
+    }
+
 
 
 }

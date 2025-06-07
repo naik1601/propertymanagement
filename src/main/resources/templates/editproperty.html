@@ -14,24 +14,22 @@
 <div class="page-wrapper">
     <div class="container">
         <h2>Add New Property</h2>
-        <form method="post" th:action="@{/properties/edit}" th:object="${properties}" enctype="multipart/form-data">
+        <form method="post" th:action="@{'/properties/edit/' + ${property.id}}" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Title:</label>
-                <input type="text" th:field="*{title}" /><br/>
+                <input type="text" th:field="*{property.title}" /><br/>
 
                 <label>Price:</label>
-                <input type="number" th:field="*{price}" /><br/>
+                <input type="number" th:field="*{property.price}" /><br/>
 
                 <label>Location:</label>
-                <input type="text" th:field="*{location}" /><br/>
+                <input type="text" th:field="*{property.location}" /><br/>
 
                 <label>Size:</label>
-                <input type="number" th:field="*{size}" /><br/>
+                <input type="number" th:field="*{property.size}" /><br/>
 
                 <label>Description:</label>
-                <textarea th:field="*{description}"></textarea><br/>
-
-                <button type="submit">Update Property</button>
+                <textarea th:field="*{property.description}"></textarea><br/>
                 <label for="propertyImages">Upload Property Images:</label>
                 <input type="file" id="propertyImages" name="file" accept="image/*" multiple>
                 <button type="submit" class="btn">Save Changes</button>
@@ -41,7 +39,7 @@
         <div th:each="img : ${property.images}">
             <img th:src="@{'/images/PropertyImages/' + ${property.title} + '/' + ${img.imageFileName}}"
                  style="width: 120px; height: auto;" alt="Property Image"/>
-            <form th:action="@{'/properties/delete-image/' + ${img.id}}" method="post" style="display:inline;">
+            <form th:action="@{'/properties/deleteimage/' + ${img.id}}" method="post" style="display:inline;">
                 <button type="submit" onclick="return confirm('Delete this image?')">Delete</button>
             </form>
         </div>

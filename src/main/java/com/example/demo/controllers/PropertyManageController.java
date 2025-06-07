@@ -137,12 +137,33 @@ public class PropertyManageController {
         return "redirect:/properties/manage";
     }
     @GetMapping("/properties/edit/{id}")
+    @PreAuthorize("hasRole('AGENT')")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Property property = userService.findById(id);
+        Property property = userService.getpropertybyid(id);
         model.addAttribute("property", property);
-        return "editproperty"; // the name of your Thymeleaf template
+        return "editproperty";
     }
+    @PostMapping("/properties/edit/{id}")
+    @PreAuthorize("hasRole('AGENT')")
+    public String updateproperty(@PathVariable Long id, @ModelAttribute Property updatedProperty,
+                                 @RequestParam("file") MultipartFile[] newImages) {
+        userService.updateProperty(id, updatedProperty, newImages);
+        return "redirect:/properties/manage";
 
+    }
+    @PostMapping("/properties/deleteimage/{imageId}")
+    @PreAuthorize("hasRole('AGENT')")
+    public String deleteImage(@PathVariable Long imageId, RedirectAttributes redirectAttributes) {
+        userService.deletepropertyimgbyid(imageId); // delete from DB and file system
+        redirectAttributes.addFlashAttribute("message", "Image deleted.");
+        return "redirect:/properties/manage";
+    }
+    @PostMapping("/properties/delete/{id}")
+    @PreAuthorize("hasRole('AGENT')")
+    public String deleteProperty(@PathVariable Long id) {
+        userService.deleteproperty(id);
+        return "redirect:/properties/manage";
+    }
 
 
 }

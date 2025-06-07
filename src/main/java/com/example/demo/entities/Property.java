@@ -28,11 +28,11 @@ public class Property {
     private User agent;
 
     // One-to-many: property images
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
     private List<PropertyImage> images;
 
     // Many-to-many: favorited by users
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
     private List<Favourite> favourites;
 
     // Constructors
